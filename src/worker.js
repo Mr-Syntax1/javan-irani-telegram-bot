@@ -17,22 +17,14 @@ const keyboard = Markup.inlineKeyboard([
 const createBot = (token) => {
     const bot = new Telegraf(token);
 
-    bot.telegram.setMyCommands([
-        { command: 'start', description: 'شروع' },
-        { command: 'dollar', description: 'قیمت دلار' },
-        { command: 'weather', description: 'آب و هوای تبریز' },
-        { command: 'javan-irani', description: 'سلام جوان ایرانی' },
-        { command: 'help', description: 'راهنما' },
-    ]).catch(console.error);
-
-    bot.start((ctx) => {
+    bot.command('start', (ctx) => {
         const name = ctx.from?.first_name || 'دوست عزیز';
         ctx.reply(
             `سلام ${name}! 👋\n\n` +
             `از دستورات زیر استفاده کن:\n` +
             `/dollar - قیمت دلار\n` +
             `/weather - آب و هوای تبریز\n` +
-            `/javan-irani - سلام جوان ایرانی\n` +
+            `/javan_irani - سلام جوان ایرانی\n` +
             `/help - راهنما`,
             keyboard
         );
@@ -79,7 +71,7 @@ const createBot = (token) => {
     });
 
     // ← دستور جدید: /javan-irani
-    bot.command('javan-irani', async (ctx) => {
+    bot.command('javan_irani', async (ctx) => {
         try {
             await ctx.sendChatAction('typing');
 
@@ -113,7 +105,7 @@ const createBot = (token) => {
                 `🕐 ${dollar.updatedAt}`
             );
         } catch (err) {
-            console.error('Javan-irani error:', err);
+            console.error('Javan_irani error:', err);
             await ctx.reply('❌ خطا در پردازش دستور');
         }
     });
@@ -124,7 +116,7 @@ const createBot = (token) => {
             `/start - شروع\n` +
             `/dollar - قیمت دلار\n` +
             `/weather - آب و هوا\n` +
-            `/javan-irani - سلام جوان ایرانی\n` +
+            `/javan_irani - سلام جوان ایرانی\n` +
             `/help - راهنما`,
             keyboard
         );
