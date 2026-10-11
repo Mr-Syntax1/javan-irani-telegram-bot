@@ -18,7 +18,8 @@ import {
 
 // ← منوی ارزها
 export async function handleCurrencyCommand(ctx) {
-	await ctx.reply('💰 کدوم ارز رو می‌خوای؟', createCurrencyKeyboard());
+	const name = ctx.from?.first_name || 'عزیز';
+	await ctx.reply(`💰 ${name} جوان، کدوم ارز رو می‌خوای؟`, createCurrencyKeyboard());
 }
 
 // ← نمایش قیمت هر ارز
@@ -40,28 +41,32 @@ export const handleUSDTCommand = (ctx) => showCurrency(ctx, getUSDTPrice, 'قی�
 
 
 export async function handleStartCommand(ctx) {
+	const name = ctx.from?.first_name || 'عزیز';
 	await ctx.sendChatAction('typing');
 	try {
 		const greeting = getTimeBasedGreeting();
 		const dollar = await getDollarPrice();
-		await ctx.reply(formatJavanIranianMessage(greeting, dollar), createKeyboard());
+		const message = formatJavanIranianMessage(greeting, dollar);
+		await ctx.reply(`🌱 سلام جوان ${name}، خوش اومدی!\n\n${message}`, createKeyboard());
 	} catch (err) {
 		console.error('❌ Start command error:', err);
-		await ctx.reply('❌ خطا در پردازش دستور', createKeyboard());
+		await ctx.reply(`🌱 سلام جوان ${name}، خوش اومدی!\n\nخطا در پردازش دستور`, createKeyboard());
 	}
 }
 
 export async function handleWeatherCommand(ctx) {
+	const name = ctx.from?.first_name || 'عزیز';
 	await ctx.sendChatAction('typing');
 	try {
 		const weather = await getWeather();
-		await ctx.reply(formatWeather(weather), createKeyboard());
+		await ctx.reply(`🌤 ${name} جوان، آب و هوای تبریز اینه:\n\n${formatWeather(weather)}`, createKeyboard());
 	} catch (err) {
 		console.error('❌ Weather command error:', err);
-		await ctx.reply('❌ خطا در دریافت آب و هوا', createKeyboard());
+		await ctx.reply(`🌤 ${name} جوان، آب و هوای تبریز اینه:\n\nخطا در دریافت آب و هوا`, createKeyboard());
 	}
 }
 
 export async function handleHelpCommand(ctx) {
-	await ctx.reply(formatHelpMessage(), createKeyboard());
+	const name = ctx.from?.first_name || 'عزیز';
+	await ctx.reply(`سلام جوان ${name}\n\n${formatHelpMessage()}`, createKeyboard());
 }
