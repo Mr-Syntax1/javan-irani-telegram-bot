@@ -1,5 +1,3 @@
-// src/services/dollarService.js
-
 const DOLLAR_API = 'https://raw.githubusercontent.com/iran-market/iran-market.github.io/main/data/popular.json';
 
 export const getDollarPrice = async () => {
@@ -32,4 +30,3 @@ export const getDollarPrice = async () => {
         throw err;
     }
 };
-

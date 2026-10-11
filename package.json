@@ -1,12 +1,12 @@
 {
-  "name": "poor_iranys_information_bot",
+  "name": "JavanIranyBot",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "start": "node src/worker.js",
+    "dev": "nodemon src/worker.js"
   },
   "keywords": [],
   "author": "",
