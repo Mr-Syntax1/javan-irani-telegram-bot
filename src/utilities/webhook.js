@@ -2,6 +2,7 @@ export function validateEnvironment(env) {
 	if (!env.BOT_TOKEN) {
 		throw new Error('BOT_TOKEN environment variable is required');
 	}
+	
 	if (env.WEBHOOK_SECRET && typeof env.WEBHOOK_SECRET !== 'string') {
 		throw new Error('WEBHOOK_SECRET must be a string');
 	}

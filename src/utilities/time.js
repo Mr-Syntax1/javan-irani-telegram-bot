@@ -18,12 +18,12 @@ export function getTimeBasedGreeting() {
         emoji: GREETING_EMOJIS.morning
     };
 
-    if (hour >= 12 && hour < 17) return {
+    if (hour >= 12 && hour < 16) return {
         label: GREETING_LABELS.noon,
         emoji: GREETING_EMOJIS.noon
     };
 
-    if (hour >= 17 && hour < 20) return {
+    if (hour >= 16 && hour < 19) return {
         label: GREETING_LABELS.afternoon,
         emoji: GREETING_EMOJIS.afternoon
     };

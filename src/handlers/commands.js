@@ -1,13 +1,43 @@
-import { getDollarPrice } from '../services/dollarService.js';
+import {
+	getDollarPrice,
+	getGoldPrice,
+	getCoinEmamiPrice,
+	getUSDTPrice,
+} from '../services/dollarService.js';
+
 import { getWeather } from '../services/weatherService.js';
-import { createKeyboard } from '../utilities/keyboard.js';
+import { createCurrencyKeyboard, createKeyboard } from '../utilities/keyboard.js';
 import { getTimeBasedGreeting } from '../utilities/time.js';
 import {
 	formatDollarPrice,
+	formatCurrencyPrice,
 	formatWeather,
 	formatJavanIranianMessage,
 	formatHelpMessage,
 } from '../utilities/formatters.js';
+
+// ← منوی ارزها
+export async function handleCurrencyCommand(ctx) {
+	await ctx.reply('💰 کدوم ارز رو می‌خوای؟', createCurrencyKeyboard());
+}
+
+// ← نمایش قیمت هر ارز
+async function showCurrency(ctx, fetcher, name) {
+	try {
+		const data = await fetcher();
+		await ctx.reply(formatCurrencyPrice(data, name));
+	} catch (err) {
+		await ctx.reply(`❌ خطا در دریافت ${name}`);
+	}
+}
+
+
+export const handleDollarCommand = (ctx) => showCurrency(ctx, getDollarPrice, 'قیمت دلار (بازار آزاد)');
+export const handleGoldCommand = (ctx) => showCurrency(ctx, getGoldPrice, 'قیمت طلای ۱۸ عیار');
+export const handleCoinCommand = (ctx) => showCurrency(ctx, getCoinEmamiPrice, 'قیمت سکه امامی');
+export const handleUSDTCommand = (ctx) => showCurrency(ctx, getUSDTPrice, 'قیمت تتر');
+
+
 
 export async function handleStartCommand(ctx) {
 	await ctx.sendChatAction('typing');
@@ -18,17 +48,6 @@ export async function handleStartCommand(ctx) {
 	} catch (err) {
 		console.error('❌ Start command error:', err);
 		await ctx.reply('❌ خطا در پردازش دستور', createKeyboard());
-	}
-}
-
-export async function handleDollarCommand(ctx) {
-	await ctx.sendChatAction('typing');
-	try {
-		const dollar = await getDollarPrice();
-		await ctx.reply(formatDollarPrice(dollar), createKeyboard());
-	} catch (err) {
-		console.error('❌ Dollar command error:', err);
-		await ctx.reply('❌ خطا در دریافت قیمت دلار', createKeyboard());
 	}
 }
 

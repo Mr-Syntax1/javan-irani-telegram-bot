@@ -1,12 +1,13 @@
 {
   "name": "JavanIranyBot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/worker.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/worker.js",
-    "dev": "nodemon src/worker.js"
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
   },
   "keywords": [],
   "author": "",

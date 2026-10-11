@@ -1,19 +1,40 @@
-import { getDollarPrice } from '../services/dollarService.js';
+import {
+	getDollarPrice,
+	getGoldPrice,
+	getCoinEmamiPrice,
+	getUSDTPrice,
+} from '../services/dollarService.js';
 import { getWeather } from '../services/weatherService.js';
-import { createKeyboard } from '../utilities/keyboard.js';
+import { createKeyboard, createCurrencyKeyboard } from '../utilities/keyboard.js';
 import { getTimeBasedGreeting } from '../utilities/time.js';
-import { formatDollarPrice, formatJavanIranianMessage, formatWeather } from '../utilities/formatters.js';
+import {
+    formatCurrencyPrice,
+    formatJavanIranianMessage,
+    formatWeather,
+} from '../utilities/formatters.js';
 
-export async function handleDollarAction(ctx) {
-	await ctx.answerCbQuery();// بستن حالت لودینگ دکمه
+// ← منوی ارزها
+export async function handleCurrencyMenuAction(ctx) {
+	await ctx.answerCbQuery();
+	await ctx.reply('💰 کدوم ارز رو می‌خوای؟', createCurrencyKeyboard());
+}
+
+// ← نمایش قیمت هر ارز
+async function showCurrency(ctx, fetcher, name) {
+	await ctx.answerCbQuery();
 	try {
-		const dollar = await getDollarPrice();
-		await ctx.reply(formatDollarPrice(dollar), createKeyboard());
+		const data = await fetcher();
+		await ctx.reply(formatCurrencyPrice(data, name), createKeyboard());
 	} catch (err) {
-		console.error('❌ Dollar action error:', err);
-		await ctx.reply('❌ خطا در دریافت قیمت دلار', createKeyboard());
+		await ctx.reply(`❌ خطا در دریافت ${name}`, createKeyboard());
 	}
 }
+
+export const handleDollarAction = (ctx) => showCurrency(ctx, getDollarPrice, 'قیمت دلار (بازار آزاد)');
+export const handleGoldAction = (ctx) => showCurrency(ctx, getGoldPrice, 'قیمت طلای ۱۸ عیار');
+export const handleCoinAction = (ctx) => showCurrency(ctx, getCoinEmamiPrice, 'قیمت سکه امامی');
+export const handleUSDTAction = (ctx) => showCurrency(ctx, getUSDTPrice, 'قیمت تتر');
+
 
 export async function handleWeatherAction(ctx) {
 	await ctx.answerCbQuery();
@@ -36,4 +57,9 @@ export async function handleStartAction(ctx) {
 		console.error('❌ Start command error:', err);
 		await ctx.reply('❌ خطا در پردازش دستور', createKeyboard());
 	}
+}
+
+export async function handleBackToMainAction(ctx) {
+	await ctx.answerCbQuery();
+	await ctx.editMessageText('🏠 منوی اصلی:', createKeyboard());
 }

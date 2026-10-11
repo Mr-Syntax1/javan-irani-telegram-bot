@@ -1,15 +1,20 @@
 import { Telegraf } from 'telegraf';
 import {
 	handleStartCommand,
-	handleDollarCommand,
+	handleCurrencyCommand,
 	handleWeatherCommand,
 	handleHelpCommand,
 } from './handlers/commands.js';
 
 import {
+	handleCurrencyMenuAction,
 	handleDollarAction,
-	handleStartAction,
+	handleGoldAction,
+	handleCoinAction,
+	handleUSDTAction,
 	handleWeatherAction,
+	handleBackToMainAction,
+	handleStartAction,
 } from './handlers/actions.js';
 
 import { validateEnvironment, verifyWebhookSecret } from './utilities/webhook.js';
@@ -19,21 +24,33 @@ function createBot(token) {
 
 	// Commands
 	bot.start(handleStartCommand);
-	bot.command('dollar', handleDollarCommand);
+	bot.command('currency', handleCurrencyCommand);
 	bot.command('weather', handleWeatherCommand);
 	bot.command('help', handleHelpCommand);
 
 	// Actions (دکمه‌های شیشه‌ای)
-	bot.action('dollar', handleDollarAction);
+	bot.action('currency_menu', handleCurrencyMenuAction);
+	bot.action('currency_dollar', handleDollarAction);
+	bot.action('currency_gold', handleGoldAction);
+	bot.action('currency_coin', handleCoinAction);
+	bot.action('currency_usdt', handleUSDTAction);
 	bot.action('weather', handleWeatherAction);
 	bot.action('greet_morning', handleStartAction);
+	bot.action('back_to_main', handleBackToMainAction);
 
 	return bot;
 }
 
 export default {
-	async fetch(request, env, ctx) {
+	async fetch(request, env, ctx) {// کلاد فلر
 		validateEnvironment(env);
+
+		if (request.method === 'GET') {
+			return new Response('🤖 ربات فعال است!', {
+				status: 200,
+				headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+			});
+		}
 
 		if (!verifyWebhookSecret(request, env.WEBHOOK_SECRET)) {
 			console.warn('⚠️ Invalid webhook secret');
@@ -42,6 +59,7 @@ export default {
 
 		const bot = createBot(env.BOT_TOKEN);
 
+		// POST
 		if (request.method === 'POST') {
 			try {
 				const update = await request.json();
@@ -53,9 +71,6 @@ export default {
 			}
 		}
 
-		return new Response('🤖 ربات فعال است!', {
-			status: 200,
-			headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-		});
+		return new Response('Method Not Allowed', { status: 405 });
 	},
 };

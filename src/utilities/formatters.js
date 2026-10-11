@@ -1,22 +1,29 @@
 import { DOLLAR_EMOJIS } from './constants.js';
 
-export function formatDollarPrice(dollar) {
-	const changeEmoji = dollar.change >= 0 ? DOLLAR_EMOJIS.up : DOLLAR_EMOJIS.down;
-	const changeSign = dollar.change >= 0 ? '+' : '';
-	const trend = dollar.change >= 0 ? 'صعودی' : 'نزولی';
+// قیمت دلار
+export function formatCurrencyPrice(currency, name) {
+	const changeEmoji = currency.change >= 0 ? DOLLAR_EMOJIS.up : DOLLAR_EMOJIS.down;
+	const changeSign = currency.change >= 0 ? '+' : '';
+	const trend = currency.change >= 0 ? 'صعودی' : 'نزولی';
 
 	return (
-		`💵 قیمت دلار (بازار آزاد)\n\n` +
-		`💰 قیمت: ${dollar.price.toLocaleString('fa-IR')} تومان\n` +
-		`${changeEmoji} تغییر: ${changeSign}${dollar.change.toLocaleString('fa-IR')} (${dollar.changePct}%)\n` +
+		`💰 ${name}\n\n` +
+		`💵 قیمت: ${currency.price.toLocaleString('fa-IR')} تومان\n` +
+		`${changeEmoji} تغییر: ${changeSign}${currency.change.toLocaleString('fa-IR')} (${currency.changePct}%)\n` +
 		`📊 روند: ${trend}\n\n` +
-		`📈 بیشترین امروز: ${dollar.high.toLocaleString('fa-IR')}\n` +
-		`📉 کمترین امروز: ${dollar.low.toLocaleString('fa-IR')}\n\n` +
-		`🕐 آخرین بروزرسانی: ${dollar.updatedAt}\n` +
+		`📈 بیشترین امروز: ${currency.high.toLocaleString('fa-IR')}\n` +
+		`📉 کمترین امروز: ${currency.low.toLocaleString('fa-IR')}\n\n` +
+		`🕐 آخرین بروزرسانی: ${currency.updatedAt}\n` +
 		`📍 منبع: بازار آزاد تهران`
 	);
 }
 
+// دلار
+export function formatDollarPrice(dollar) {
+	return formatCurrencyPrice(dollar, 'قیمت دلار (بازار آزاد)');
+}
+
+// وضعیت اب و هوا
 export function formatWeather(weather) {
 	return (
 		`🌤 آب و هوای ${weather.city}\n\n` +
@@ -28,6 +35,7 @@ export function formatWeather(weather) {
 	);
 }
 
+// پیام start و جوان ایرانی
 export function formatJavanIranianMessage(greeting, dollar) {
 	return (
 		`${greeting.emoji} ${greeting.label} بخیر جوان بدبخت ایرانی 🌱\n\n` +
@@ -35,11 +43,12 @@ export function formatJavanIranianMessage(greeting, dollar) {
 	);
 }
 
+// پیام /help
 export function formatHelpMessage() {
 	return (
 		`📚 راهنما\n\n` +
 		`/start - شروع\n` +
-		`/dollar - قیمت دلار\n` +
+		`/currency - قیمت ارز ها\n` +
 		`/weather - آب و هوا\n` +
 		`/help - راهنما`
 	);
