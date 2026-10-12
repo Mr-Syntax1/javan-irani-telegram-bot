@@ -64,6 +64,15 @@ Just click the link and hit `/start`. 🎉
 
 ---
 
+### 🚀 Available Scripts
+| Script | Command | Purpose |
+| :--- | :--- | :--- |
+| `npm run dev` | `wrangler dev` | Run locally |
+| `npm run deploy` | `wrangler deploy` | Deploy to Cloudflare |
+| `npm run tail` | `wrangler tail` | View live logs |
+
+---
+
 ## 🛠️ Tech Stack
 
 | Technology | Purpose |
@@ -74,6 +83,18 @@ Just click the link and hit `/start`. 🎉
 | **Wrangler** | Deployment tool |
 | **JavaScript (ESM)** | Programming language |
 
+---
+
+### 📦 Dependencies
+
+| Package | Version | Purpose |
+| :--- | :--- | :--- |
+| **telegraf** | ^4.16.3 | Telegram Bot Framework |
+| **dotenv** | ^18.0.7 | Environment variables |
+| **nodemon** | ^3.1.14 | Auto-restart during development |
+
+---
+
 ### 📡 APIs Used
 
 | API | Purpose |
@@ -83,9 +104,6 @@ Just click the link and hit `/start`. 🎉
 | [FreeNewsApi](https://freenewsapi.ai) | News data |
 
 ---
-
-## 📁 Project Structure
-# 🇮🇷 Javan Irani Telegram Bot
 
 ## 📁 Project Structure
 
