@@ -15,14 +15,6 @@
 
 ---
 
-<p align="center">
-  <a href="https://t.me/poor_Iranys_Information_bot">
-    <b>🤖 Try the bot on Telegram</b>
-  </a>
-</p>
-
----
-
 ## 📖 About
 
 **Javan Irani Telegram Bot** is a free, ad-free Telegram bot that provides real-time, practical information to Persian-speaking users.
@@ -37,7 +29,7 @@ Try the bot right now on Telegram:
 
 <p align="center">
   <a href="https://t.me/poor_Iranys_Information_bot">
-    <b>👉 @poor_Iranys_Information_bot 👈</b>
+    <b>👉 🤖 Try the bot on Telegram 👈</b>
   </a>
 </p>
 
