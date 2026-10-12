@@ -61,7 +61,7 @@ Just click the link and hit `/start`. 🎉
 | `/help` | Help |
 
 </td>
-<td valign="top" align="right">
+<td valign="middle" align="right">
 
 <img width="320" height="180" alt="gif" src="https://github.com/user-attachments/assets/e3fcbfd0-0963-4476-a045-38d23355ff3f" />
 
