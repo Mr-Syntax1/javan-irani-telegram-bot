@@ -37,6 +37,10 @@ Just click the link and hit `/start`. 🎉
 
 ---
 
+<table>
+<tr>
+<td valign="top" width="50%">
+
 ## ✨ Features
 
 | Feature | Description |
@@ -45,10 +49,14 @@ Just click the link and hit `/start`. 🎉
 | **🌤 Weather** | Tabriz weather with temperature, humidity, wind, and condition |
 | **📰 News** | Latest Iran International news across multiple categories |
 
-<div align="right">
-  <img width="320" height="180" alt="gif" src="https://github.com/user-attachments/assets/e3fcbfd0-0963-4476-a045-38d23355ff3f" />
-</div>
+</td>
+<td valign="top" width="50%" align="right">
 
+<img width="320" height="180" alt="gif" src="https://github.com/user-attachments/assets/e3fcbfd0-0963-4476-a045-38d23355ff3f" />
+
+</td>
+</tr>
+</table>
 ### 🎯 Commands
 
 | Command | Description |
