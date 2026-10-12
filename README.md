@@ -39,7 +39,7 @@ Just click the link and hit `/start`. 🎉
 
 <table>
 <tr>
-<td valign="top">
+<td valign="top" width="50%">
 
 ## ✨ Features
 
@@ -50,7 +50,7 @@ Just click the link and hit `/start`. 🎉
 | **📰 News** | Latest Iran International news across multiple categories |
 
 </td>
-<td valign="top" align="right">
+<td valign="top" width="50%" align="right">
 
 <img width="320" height="180" alt="gif" src="https://github.com/user-attachments/assets/e3fcbfd0-0963-4476-a045-38d23355ff3f" />
 
