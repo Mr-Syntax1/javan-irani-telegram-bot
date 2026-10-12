@@ -4,6 +4,7 @@ import {
 	handleCurrencyCommand,
 	handleWeatherCommand,
 	handleHelpCommand,
+	handleNewsCommand
 } from './handlers/commands.js';
 
 import {
@@ -15,6 +16,13 @@ import {
 	handleWeatherAction,
 	handleBackToMainAction,
 	handleStartAction,
+	handleNewsMenuAction,
+	handleNewsEconomyAction,
+	handleNewsPoliticsAction,
+	handleNewsSportsAction,
+	handleNewsTechAction,
+	handleNewsInternationalAction,
+	handleNewsAllAction,
 } from './handlers/actions.js';
 
 import { validateEnvironment, verifyWebhookSecret } from './utilities/webhook.js';
@@ -26,9 +34,18 @@ function createBot(token) {
 	bot.start(handleStartCommand);
 	bot.command('currency', handleCurrencyCommand);
 	bot.command('weather', handleWeatherCommand);
+	bot.command('news', handleNewsCommand);
 	bot.command('help', handleHelpCommand);
 
 	// Actions (دکمه‌های شیشه‌ای)
+	bot.action('news_menu', handleNewsMenuAction);
+	bot.action('news_economy', handleNewsEconomyAction);
+	bot.action('news_politics', handleNewsPoliticsAction);
+	bot.action('news_sports', handleNewsSportsAction);
+	bot.action('news_tech', handleNewsTechAction);
+	bot.action('news_international', handleNewsInternationalAction);
+	bot.action('news_all', handleNewsAllAction);
+
 	bot.action('currency_menu', handleCurrencyMenuAction);
 	bot.action('currency_dollar', handleDollarAction);
 	bot.action('currency_gold', handleGoldAction);
@@ -42,7 +59,7 @@ function createBot(token) {
 }
 
 export default {
-	async fetch(request, env, ctx) {// کلاد فلر
+	async fetch(request, env, ctx) { // کلاد فلر
 		validateEnvironment(env);
 
 		if (request.method === 'GET') {

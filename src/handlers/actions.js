@@ -6,13 +6,22 @@ import {
 } from '../services/dollarService.js';
 
 import { getWeather } from '../services/weatherService.js';
-import { createKeyboard, createCurrencyKeyboard } from '../utilities/keyboard.js';
+import {
+	createCurrencyKeyboard,
+	createKeyboard,
+	createNewsKeyboard
+} from '../utilities/keyboard.js';
+
 import { getTimeBasedGreeting } from '../utilities/time.js';
 import {
-    formatCurrencyPrice,
-    formatJavanIranianMessage,
-    formatWeather,
+	formatCurrencyPrice,
+	formatJavanIranianMessage,
+	formatWeather,
+	formatNews
 } from '../utilities/formatters.js';
+
+import { getNews } from '../services/newsService.js';
+
 
 
 // ← منوی ارزها
@@ -40,6 +49,36 @@ export const handleCoinAction = (ctx) => showCurrency(ctx, getCoinEmamiPrice, '�
 export const handleUSDTAction = (ctx) => showCurrency(ctx, getUSDTPrice, 'قیمت تتر');
 
 
+
+async function showNews(ctx, sectionName) {
+	await ctx.answerCbQuery();
+	const name = ctx.from?.first_name || 'عزیز';
+	try {
+		const articles = await getNews(sectionName);
+		await ctx.reply(
+			`📰 ${name}, بفرما جوان، اینم اخبار ${sectionName}:\n\n${formatNews(articles, sectionName)}`,
+			createKeyboard()
+		);
+	} catch (err) {
+		console.error('❌ News action error:', err);
+		await ctx.reply(`❌ ${name} جوان، خطا در دریافت اخبار`, createKeyboard());
+	}
+}
+
+export const handleNewsEconomyAction = (ctx) => showNews(ctx, 'اقتصاد');
+export const handleNewsPoliticsAction = (ctx) => showNews(ctx, 'سیاسی');
+export const handleNewsSportsAction = (ctx) => showNews(ctx, 'ورزش');
+export const handleNewsTechAction = (ctx) => showNews(ctx, 'فناوری');
+export const handleNewsInternationalAction = (ctx) => showNews(ctx, 'بین‌الملل');
+export const handleNewsAllAction = (ctx) => showNews(ctx, null);
+
+// منوی اخبار
+export async function handleNewsMenuAction(ctx) {
+	await ctx.answerCbQuery();
+	const name = ctx.from?.first_name || 'عزیز';
+	await ctx.reply(`📰 ${name} جوان، کدوم بخش خبری رو می‌خوای ببینی؟`, createNewsKeyboard());
+}
+
 export async function handleWeatherAction(ctx) {
 	await ctx.answerCbQuery();
 	const name = ctx.from?.first_name || 'عزیز';
@@ -59,10 +98,10 @@ export async function handleStartAction(ctx) {
 		const greeting = getTimeBasedGreeting();
 		const dollar = await getDollarPrice();
 		const message = formatJavanIranianMessage(greeting, dollar);
-		await ctx.reply(`🌱 سلام جوان ${name}!\nخوش اومدی به ربات اطلاعات ایرانی 🌱\n\n${message}`, createKeyboard());
+		await ctx.reply(`🌱 سلام جوان ${name}\n\n${message}`, createKeyboard());
 	} catch (err) {
 		console.error('❌ Start command error:', err);
-		await ctx.reply(`🌱 سلام جوان ${name}!\nخوش اومدی به ربات اطلاعات ایرانی 🌱`, createKeyboard());
+		await ctx.reply(`🌱 سلام جوان ${name}\n\n${message}`, createKeyboard());
 	}
 }
 

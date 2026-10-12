@@ -43,12 +43,38 @@ export function formatJavanIranianMessage(greeting, dollar) {
 	);
 }
 
+// اخبار /news
+export function formatNews(articles, sectionName) {
+	if (!articles || articles.length === 0) {
+		return `📰 خبری با موضوع ${sectionName} پیدا نشد.`;
+	}
+
+	const newsText = articles.map((article, index) => {
+		const date = new Date(article.publishedAt).toLocaleDateString('fa-IR', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+		});
+		const description = article.description
+			? `\n📝 ${article.description.slice(0, 100)}...`
+			: '';
+		return (
+			`${index + 1}. ${article.title}${description}\n` +
+			`📌 ${article.source} | 🕐 ${date}\n` +
+			`🔗 ${article.url}`
+		);
+	}).join('\n\n');
+
+	return `📰 آخرین اخبار «${sectionName}» از صایب:\n\n${newsText}`;
+}
+
 // پیام /help
 export function formatHelpMessage() {
 	return (
 		`📚 راهنما\n\n` +
 		`/start - شروع\n` +
 		`/currency - قیمت ارز ها\n` +
+		`/news - اخبار ها\n` +
 		`/weather - آب و هوا\n` +
 		`/help - راهنما`
 	);

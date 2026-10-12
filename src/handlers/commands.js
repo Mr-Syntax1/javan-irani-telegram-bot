@@ -5,8 +5,9 @@ import {
 	getUSDTPrice,
 } from '../services/dollarService.js';
 
+import { getNews } from '../services/newsService.js';
 import { getWeather } from '../services/weatherService.js';
-import { createCurrencyKeyboard, createKeyboard } from '../utilities/keyboard.js';
+import { createCurrencyKeyboard,createNewsKeyboard, createKeyboard } from '../utilities/keyboard.js';
 import { getTimeBasedGreeting } from '../utilities/time.js';
 import {
 	formatDollarPrice,
@@ -14,6 +15,7 @@ import {
 	formatWeather,
 	formatJavanIranianMessage,
 	formatHelpMessage,
+	formatNews
 } from '../utilities/formatters.js';
 
 // ← منوی ارزها
@@ -39,7 +41,7 @@ export const handleCoinCommand = (ctx) => showCurrency(ctx, getCoinEmamiPrice, '
 export const handleUSDTCommand = (ctx) => showCurrency(ctx, getUSDTPrice, 'قیمت تتر');
 
 
-
+// استارت /start
 export async function handleStartCommand(ctx) {
 	const name = ctx.from?.first_name || 'عزیز';
 	await ctx.sendChatAction('typing');
@@ -54,6 +56,7 @@ export async function handleStartCommand(ctx) {
 	}
 }
 
+// اب و هوا
 export async function handleWeatherCommand(ctx) {
 	const name = ctx.from?.first_name || 'عزیز';
 	await ctx.sendChatAction('typing');
@@ -64,6 +67,14 @@ export async function handleWeatherCommand(ctx) {
 		console.error('❌ Weather command error:', err);
 		await ctx.reply(`🌤 ${name} جوان، آب و هوای تبریز اینه:\n\nخطا در دریافت آب و هوا`, createKeyboard());
 	}
+}
+
+export async function handleNewsCommand(ctx) {
+    const name = ctx.from?.first_name || 'عزیز';
+    await ctx.reply(
+        `📰 ${name} جوان، کدوم بخش خبری رو می‌خوای ببینی؟`,
+        createNewsKeyboard()
+    );
 }
 
 export async function handleHelpCommand(ctx) {
